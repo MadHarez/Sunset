@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sceneView: View
     private lateinit var sunView: ImageView
+    private lateinit var sunRaysView: ImageView
     private lateinit var skyView: View
     private lateinit var moonView: ImageView
     private lateinit var stars: List<ImageView>
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         sceneView = findViewById(R.id.scene)
         sunView = findViewById(R.id.sun)
+        sunRaysView = findViewById(R.id.sun_rays)
         skyView = findViewById(R.id.sky)
         moonView = findViewById(R.id.moon)
 
@@ -179,6 +181,23 @@ class MainActivity : AppCompatActivity() {
                 }
         }
 
+        // Sun rays animation - rotating and fading
+        val sunRaysRotation = ObjectAnimator.ofFloat(sunRaysView, "rotation", 0f, 360f)
+            .setDuration(3000)
+        sunRaysRotation.interpolator = LinearInterpolator()
+        
+        val sunRaysFadeIn = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0f, 0.8f)
+            .setDuration(1000)
+        
+        val sunRaysFadeOut = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0.8f, 0f)
+            .setDuration(1500)
+        sunRaysFadeOut.startDelay = 1500
+        
+        val sunRaysPulse = ObjectAnimator.ofFloat(sunRaysView, "scaleX", 1f, 1.2f, 1f)
+            .setDuration(3000)
+        val sunRaysPulseY = ObjectAnimator.ofFloat(sunRaysView, "scaleY", 1f, 1.2f, 1f)
+            .setDuration(3000)
+        
         // Show moon
         val moonAnimator = ObjectAnimator.ofFloat(moonView, "alpha", 0f, 1f)
             .setDuration(1500)
@@ -227,6 +246,9 @@ class MainActivity : AppCompatActivity() {
             .with(sunReflectionY)
             .with(sunReflectionAlpha)
             .with(sunReflectionScale)
+            .with(sunRaysRotation)
+            .with(sunRaysPulse)
+            .with(sunRaysPulseY)
             .before(nightSkyAnimator)
 
         cloudAnimators.forEach { animatorSet.play(heightAnimator).with(it) }
@@ -234,6 +256,8 @@ class MainActivity : AppCompatActivity() {
         starReflectionAnimators.forEach { it.start() }
 
         animatorSet.start()
+        sunRaysFadeIn.start()
+        sunRaysFadeOut.start()
         moonAnimator.start()
         moonReflectionAnimator.start()
         starTwinkle.forEach { it.start() }
@@ -295,6 +319,24 @@ class MainActivity : AppCompatActivity() {
                 .apply { startDelay = 2000L + index * 200L }
         }
         
+        // Sun rays animation - rotating and fading in
+        val sunRaysRotation = ObjectAnimator.ofFloat(sunRaysView, "rotation", 0f, -360f)
+            .setDuration(3000)
+        sunRaysRotation.interpolator = LinearInterpolator()
+        
+        val sunRaysFadeIn = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0f, 0.8f)
+            .setDuration(1500)
+        sunRaysFadeIn.startDelay = 1500
+        
+        val sunRaysFadeOut = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0.8f, 0f)
+            .setDuration(1000)
+        sunRaysFadeOut.startDelay = 2500
+        
+        val sunRaysPulse = ObjectAnimator.ofFloat(sunRaysView, "scaleX", 1f, 1.2f, 1f)
+            .setDuration(3000)
+        val sunRaysPulseY = ObjectAnimator.ofFloat(sunRaysView, "scaleY", 1f, 1.2f, 1f)
+            .setDuration(3000)
+        
         // Sun reflection animation (rising)
         val sunReflectionY = ObjectAnimator.ofFloat(sunReflection, "translationY", 60f, 0f)
             .setDuration(3000)
@@ -326,12 +368,17 @@ class MainActivity : AppCompatActivity() {
             .with(sunReflectionY)
             .with(sunReflectionAlpha)
             .with(sunReflectionScale)
+            .with(sunRaysRotation)
+            .with(sunRaysPulse)
+            .with(sunRaysPulseY)
 
         starAnimators.forEach { animatorSet.play(sunriseSkyAnimator).with(it) }
         cloudAnimators.forEach { animatorSet.play(daySkyAnimator).with(it) }
         starReflectionAnimators.forEach { it.start() }
 
         animatorSet.start()
+        sunRaysFadeIn.start()
+        sunRaysFadeOut.start()
         moonAnimator.start()
         moonReflectionAnimator.start()
 
@@ -404,6 +451,23 @@ class MainActivity : AppCompatActivity() {
             startDelay = 2500
         }
         
+        // Sun rays animation - double rotation with spiral effect
+        val sunRaysRotation = ObjectAnimator.ofFloat(sunRaysView, "rotation", 0f, 720f)
+            .setDuration(3500)
+        sunRaysRotation.interpolator = LinearInterpolator()
+        
+        val sunRaysFadeIn = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0f, 1f)
+            .setDuration(1200)
+        
+        val sunRaysFadeOut = ObjectAnimator.ofFloat(sunRaysView, "alpha", 1f, 0f)
+            .setDuration(1500)
+        sunRaysFadeOut.startDelay = 2000
+        
+        val sunRaysPulse = ObjectAnimator.ofFloat(sunRaysView, "scaleX", 1f, 1.5f, 0.8f, 1.3f, 0.5f)
+            .setDuration(3500)
+        val sunRaysPulseY = ObjectAnimator.ofFloat(sunRaysView, "scaleY", 1f, 1.5f, 0.8f, 1.3f, 0.5f)
+            .setDuration(3500)
+        
         // Sun reflection with spiral effect
         val sunReflectionY = ObjectAnimator.ofFloat(sunReflection, "translationY", 0f, 80f)
             .setDuration(3500)
@@ -442,6 +506,9 @@ class MainActivity : AppCompatActivity() {
             .with(sunReflectionY)
             .with(sunReflectionAlpha)
             .with(sunReflectionScale)
+            .with(sunRaysRotation)
+            .with(sunRaysPulse)
+            .with(sunRaysPulseY)
             .before(nightSkyAnimator)
 
         cloudAnimators.forEach { it.start() }
@@ -449,6 +516,8 @@ class MainActivity : AppCompatActivity() {
         starReflectionAnimators.forEach { it.start() }
 
         animatorSet.start()
+        sunRaysFadeIn.start()
+        sunRaysFadeOut.start()
         moonSet.start()
         moonReflectionSet.start()
 
@@ -520,6 +589,24 @@ class MainActivity : AppCompatActivity() {
             }
         }
         
+        // Sun rays animation - reverse spiral with growing effect
+        val sunRaysRotation = ObjectAnimator.ofFloat(sunRaysView, "rotation", 0f, -540f)
+            .setDuration(3500)
+        sunRaysRotation.interpolator = LinearInterpolator()
+        
+        val sunRaysFadeIn = ObjectAnimator.ofFloat(sunRaysView, "alpha", 0f, 1f)
+            .setDuration(1800)
+        sunRaysFadeIn.startDelay = 1500
+        
+        val sunRaysFadeOut = ObjectAnimator.ofFloat(sunRaysView, "alpha", 1f, 0f)
+            .setDuration(1000)
+        sunRaysFadeOut.startDelay = 3000
+        
+        val sunRaysPulse = ObjectAnimator.ofFloat(sunRaysView, "scaleX", 0.5f, 1f, 1.5f, 1.2f, 1f)
+            .setDuration(3500)
+        val sunRaysPulseY = ObjectAnimator.ofFloat(sunRaysView, "scaleY", 0.5f, 1f, 1.5f, 1.2f, 1f)
+            .setDuration(3500)
+        
         // Sun reflection with growing effect
         val sunReflectionY = ObjectAnimator.ofFloat(sunReflection, "translationY", 80f, 0f)
             .setDuration(3500)
@@ -557,6 +644,9 @@ class MainActivity : AppCompatActivity() {
             .with(sunReflectionY)
             .with(sunReflectionAlpha)
             .with(sunReflectionScale)
+            .with(sunRaysRotation)
+            .with(sunRaysPulse)
+            .with(sunRaysPulseY)
 
         starAnimators.forEach { it.start() }
         starReflectionAnimators.forEach { it.start() }
@@ -565,6 +655,8 @@ class MainActivity : AppCompatActivity() {
         cloudAnimators.forEach { it.start() }
 
         animatorSet.start()
+        sunRaysFadeIn.start()
+        sunRaysFadeOut.start()
 
         animatorSet.doOnEnd {
             isAnimating = false

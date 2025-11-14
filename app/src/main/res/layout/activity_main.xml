@@ -106,7 +106,15 @@
             android:alpha="0"
             android:src="@drawable/cloud" />
 
-        <!-- Sun -->
+        <!-- Sun with rotating rays -->
+        <ImageView
+            android:id="@+id/sun_rays"
+            android:layout_width="140dp"
+            android:layout_height="140dp"
+            android:layout_gravity="center"
+            android:alpha="0"
+            android:src="@drawable/sun_with_rays" />
+
         <ImageView
             android:id="@+id/sun"
             android:layout_width="100dp"
